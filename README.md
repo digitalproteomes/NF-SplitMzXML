@@ -17,3 +17,9 @@ If a scan is of a level not included in --extractScans_scan_levels, it will be i
 By default results will be stored in Results/Mzxml/
 
 The file names for the extracted files will have _pattern (with all non alphanumeric characters stripped) appended at the end of the original name.
+
+Example usage:
+
+```
+nextflow run digitalproteomes/NF-SplitMzXML
+```
