@@ -1,4 +1,10 @@
-if(params.help) {
+nextflow.enable.dsl=2
+
+include {split} from './splitMzXml_workflows.nf'
+
+workflow {
+    main:
+    log.info("++++++++++========================================")
     log.info""
     log.info"Extracts scans with a specific pattern in the filter line from an mzXML file"
     log.info"----------------------------------------------------------------------------"
@@ -16,39 +22,10 @@ if(params.help) {
     log.info ""
     log.info "Results will be in Results/Mzxml/"
     log.info ""
-    exit 1
+    log.info("++++++++++========================================")
+
+    split(params.mzxml_folder,
+	  params.extract_pattern)
 }
 
-mzxmlFiles = file(params.mzxml_folder + '/*.mzXML')
-
-extractionCombinations = Channel.from(mzxmlFiles).combine(Channel.from(params.extract_patterns))
-
-process extractScans {
-    tag "$mzxml - $pattern"
-    
-    publishDir 'Results/Mzxml'
-
-    input:
-    set file(mzxml), val(pattern) from extractionCombinations
-
-    output:
-    file '*.mzXML'
-
-    script:
-    if( params.extractScans_renumber )
-	"""
-        main.py --input $mzxml \
-        --output ${mzxml.baseName}_${pattern.replaceAll("\\W+","")}.mzXML \
-        --pattern $pattern \
-        --scan_levels ${params.extractScans_scan_levels} \
-        --renumber
-        """
-    else
-	"""
-        main.py --input $mzxml \
-        --output ${mzxml.baseName}_${pattern.replaceAll("\\W+","")}.mzXML \
-        --pattern $pattern \
-        --scan_levels ${params.extractScans_scan_levels}
-        """
-}
 
