@@ -12,7 +12,7 @@ workflow {
     log.info"Options:"
     log.info "  --help:            show this message and exit"
     log.info "  --mzxml_folder:    the folder with the mzXML files (default: $params.mzxml_folder)"
-    log.info "  --extract_pattern: pattern used to extract scans (default: $params.extract_patterns)"
+    log.info "  --extract_pattern: pattern used to extract scans (default: $params.extract_pattern)"
     log.info "                     Multiple patterns can be separated by a space."
     log.info "  --extractScans_scan_levels:   space separated list of MS/MS levels to filter (e.g. \"2 3\") (default: $params.extractScans_scan_levels)"
     log.info "  --extractScans_renumber:      renumber extracted scans sequentially (default: $params.extractScans_renumber)"
